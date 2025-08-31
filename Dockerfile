@@ -1,4 +1,4 @@
-# 拉去基础镜像
+# 拉取基础镜像
 FROM alpine:latest
 
 # 创建工作空间
