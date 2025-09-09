@@ -1,14 +1,9 @@
 #!/bin/sh
 
-# 构建
-docker rmi harbor.5210125.xyz:12443/library/chmlfrp/frpc:0.51.2
-docker build -t harbor.5210125.xyz:12443/library/chmlfrp/frpc:0.51.2 .
+# 进入工作空间
+cd /mnt/pve/local-data/workspace/code/chmlfrp
 
-# 标签
-docker rmi harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest
-docker tag harbor.5210125.xyz:12443/library/chmlfrp/frpc:0.51.2 harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest
-
-# 推送
-docker login harbor.5210125.xyz:12443
-docker push harbor.5210125.xyz:12443/library/chmlfrp/frpc:0.51.2
-docker push harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest
+# 构建镜像
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 \
+-t harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest \
+--no-cache --progress=plain -f ./Dockerfile --push .
