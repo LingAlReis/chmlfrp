@@ -3,7 +3,7 @@
 #
 
 # Set version and build date
-ARG BASE_URL="https://minio.5210125.xyz:12443/public/software/chmlfrp"
+ARG BASE_URL="https://minio.5210125.xyz:12443/public/software/chmlfrp/latest"
 ARG FRP_VERSION="0.51.2"
 ARG BUILD_DATE="240715"
 
@@ -18,7 +18,7 @@ ARG BASE_URL
 ENV TARGET_ARCH="amd64"
 ENV PACKAGE_SUFFIX="amd64"
 ENV FRP_PACKAGE="ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_amd64.tar.gz"
-ENV FRP_URL="${BASE_URL}/${FRP_VERSION}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_amd64.tar.gz"
+ENV FRP_URL="${BASE_URL}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_amd64.tar.gz"
 
 FROM alpine:${ALPINE_VERSION} as alpine-arm64
 ARG FRP_VERSION
@@ -27,7 +27,7 @@ ARG BASE_URL
 ENV TARGET_ARCH="arm64"
 ENV PACKAGE_SUFFIX="arm64"
 ENV FRP_PACKAGE="ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm64.tar.gz"
-ENV FRP_URL="${BASE_URL}/${FRP_VERSION}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm64.tar.gz"
+ENV FRP_URL="${BASE_URL}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm64.tar.gz"
 
 FROM alpine:${ALPINE_VERSION} as alpine-armv7
 ARG FRP_VERSION
@@ -36,7 +36,7 @@ ARG BASE_URL
 ENV TARGET_ARCH="armv7"
 ENV PACKAGE_SUFFIX="arm"
 ENV FRP_PACKAGE="ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm.tar.gz"
-ENV FRP_URL="${BASE_URL}/${FRP_VERSION}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm.tar.gz"
+ENV FRP_URL="${BASE_URL}/ChmlFrp-${FRP_VERSION}_${BUILD_DATE}_linux_arm.tar.gz"
 
 # Build ChmlFrp container
 FROM alpine-${TARGETARCH:-amd64}${TARGETVARIANT}
