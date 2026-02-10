@@ -6,22 +6,12 @@
 
 ## 2. 项目文件说明
 
-| 文件 | 说明 |
-|------|------|
-| `Dockerfile` | 多架构镜像构建定义，从指定地址下载 ChmlFrp 并安装 `frpc`，通过 `FRPC_USER`、`FRPC_PROXY` 启动。 |
-| `Dockerbuild.sh` | 推荐使用的构建脚本：自动切到项目目录、支持环境变量配置仓库/镜像名/Tag/平台、可选 push 或 load、可选无缓存构建。 |
-| `DockerfilebBuild.sh` | 通用 Docker 构建脚本模板，可被其他项目复用；本项目中以 `Dockerbuild.sh` 为 ChmlFrp 专用脚本。 |
-| `docker-compose.yml` | 编排示例：定义多个 frpc 服务（如 EasyTier、WireGuard），使用 host 网络、健康检查及外部网络。 |
-
-目录结构示例：
-
 ```
-chmlfrp/
-├── Dockerfile
-├── Dockerbuild.sh
-├── DockerfilebBuild.sh
-├── docker-compose.yml
-└── README.md
+.
+├── Dockerfile                   # 多架构镜像构建定义（从指定地址下载 ChmlFrp 并安装 frpc，通过 FRPC_USER/FRPC_PROXY 启动）
+├── DockerfilebBuild.sh          # 多平台构建并推送 Harbor 的脚本（自动切项目目录，环境变量配置仓库/镜像/Tag/平台，可选 push/load、无缓存）
+├── docker-compose.yml           # docker-compose 部署配置（多 frpc 服务示例：EasyTier、WireGuard，host 网络 + 健康检查）
+└── README.md                    # 项目说明文档
 ```
 
 ## 3. 项目使用说明
@@ -40,7 +30,7 @@ chmlfrp/
 
 ```bash
 # 使用默认配置：多架构构建并 push 到 Harbor
-bash Dockerbuild.sh
+bash DockerfilebBuild.sh
 ```
 
 默认行为：
@@ -53,16 +43,16 @@ bash Dockerbuild.sh
 
 ```bash
 # 仅构建 amd64 并加载到本机（不推送）
-PLATFORMS=linux/amd64 PUSH=false bash Dockerbuild.sh
+PLATFORMS=linux/amd64 PUSH=false bash DockerfilebBuild.sh
 
 # 指定 Tag 并禁用缓存
-IMAGE_TAG=v0.51.2 NO_CACHE=true bash Dockerbuild.sh
+IMAGE_TAG=v0.51.2 NO_CACHE=true bash DockerfilebBuild.sh
 
 # 或通过第一个参数传 Tag
-bash Dockerbuild.sh v0.51.2
+bash DockerfilebBuild.sh v0.51.2
 ```
 
-更多环境变量见 `Dockerbuild.sh` 头部注释（如 `IMAGE_REGISTRY`、`IMAGE_NAME`、`BUILD_DATE_TAG`、`DOCKERFILE` 等）。
+更多环境变量见 `DockerfilebBuild.sh` 头部注释（如 `IMAGE_REGISTRY`、`IMAGE_NAME`、`BUILD_DATE_TAG`、`DOCKERFILE` 等）。
 
 ## 5. 项目部署
 
