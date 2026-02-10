@@ -1,0 +1,42 @@
+services:
+  # chmlfrpceasytier 11010
+  chmlfrpceasytier:
+    image: harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest
+    container_name: chmlfrpceasytier
+    hostname: chmlfrpceasytier
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+      - FRPC_USER=xxxxxx
+      - FRPC_PROXY=xxxxxx
+    restart: always
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "frpc"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # chmlfrpcwireguard 51820/udp
+  chmlfrpcwireguard:
+    image: harbor.5210125.xyz:12443/library/chmlfrp/frpc:latest
+    container_name: chmlfrpcwireguard
+    hostname: chmlfrpcwireguard
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+      - LANG=en_US.UTF-8
+      - FRPC_USER=xxxxxx
+      - FRPC_PROXY=xxxxxx
+    restart: always
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "frpc"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  local:
+    external: true
