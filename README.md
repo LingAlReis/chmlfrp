@@ -9,7 +9,7 @@
 ```
 .
 ├── Dockerfile                   # 多架构镜像构建定义（从指定地址下载 ChmlFrp 并安装 frpc，通过 FRPC_USER/FRPC_PROXY 启动）
-├── DockerfilebBuild.sh          # 多平台构建并推送 Harbor 的脚本（自动切项目目录，环境变量配置仓库/镜像/Tag/平台，可选 push/load、无缓存）
+├── DockerfileBuild.sh          # 多平台构建并推送 Harbor 的脚本（自动切项目目录，环境变量配置仓库/镜像/Tag/平台，可选 push/load、无缓存）
 ├── docker-compose.yml           # docker-compose 部署配置（多 frpc 服务示例：EasyTier、WireGuard，host 网络 + 健康检查）
 └── README.md                    # 项目说明文档
 ```
@@ -30,7 +30,7 @@
 
 ```bash
 # 使用默认配置：多架构构建并 push 到 Harbor
-bash DockerfilebBuild.sh
+bash DockerfileBuild.sh
 ```
 
 默认行为：
@@ -43,16 +43,16 @@ bash DockerfilebBuild.sh
 
 ```bash
 # 仅构建 amd64 并加载到本机（不推送）
-PLATFORMS=linux/amd64 PUSH=false bash DockerfilebBuild.sh
+PLATFORMS=linux/amd64 PUSH=false bash DockerfileBuild.sh
 
 # 指定 Tag 并禁用缓存
-IMAGE_TAG=v0.51.2 NO_CACHE=true bash DockerfilebBuild.sh
+IMAGE_TAG=v0.51.2 NO_CACHE=true bash DockerfileBuild.sh
 
 # 或通过第一个参数传 Tag
-bash DockerfilebBuild.sh v0.51.2
+bash DockerfileBuild.sh v0.51.2
 ```
 
-更多环境变量见 `DockerfilebBuild.sh` 头部注释（如 `IMAGE_REGISTRY`、`IMAGE_NAME`、`BUILD_DATE_TAG`、`DOCKERFILE` 等）。
+更多环境变量见 `DockerfileBuild.sh` 头部注释（如 `IMAGE_REGISTRY`、`IMAGE_NAME`、`BUILD_DATE_TAG`、`DOCKERFILE` 等）。
 
 ## 5. 项目部署
 

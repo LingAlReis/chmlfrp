@@ -22,16 +22,16 @@ set -euo pipefail
 #
 # 使用示例：
 #   # 使用默认配置（buildx + push 到 Harbor）
-#   bash DockerfilebBuild.sh
+#   bash DockerfileBuild.sh
 #
 #   # 覆盖主 Tag 和平台，并仅加载到本机（不推远程）
-#   IMAGE_TAG=v1.0.0 PLATFORMS=linux/amd64 PUSH=false bash DockerfilebBuild.sh
+#   IMAGE_TAG=v1.0.0 PLATFORMS=linux/amd64 PUSH=false bash DockerfileBuild.sh
 #
 #   # 强制不使用缓存
-#   NO_CACHE=true bash DockerfilebBuild.sh
+#   NO_CACHE=true bash DockerfileBuild.sh
 #
 #   # 通过第一个参数指定 Tag
-#   bash DockerfilebBuild.sh v0.51.2
+#   bash DockerfileBuild.sh v0.51.2
 ##
 
 # 切换到脚本所在目录（即项目根目录）
