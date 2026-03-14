@@ -3,7 +3,7 @@
 set -euo pipefail
 
 ##
-# ChmlFrp Docker 镜像构建脚本
+# Docker 镜像构建脚本
 #
 # 特性：
 # - 自动切到脚本所在目录执行（无需关心当前工作目录）
@@ -14,7 +14,6 @@ set -euo pipefail
 # - IMAGE_REGISTRY   默认为 harbor.5210125.xyz:12443
 # - IMAGE_NAME       默认为 library/chmlfrp/frpc
 # - IMAGE_TAG        默认为 latest（主 Tag）
-# - BUILD_DATE_TAG   默认为当前日期，格式 yyyyMMdd
 # - PLATFORMS        默认为 linux/amd64,linux/arm64,linux/arm/v7
 # - DOCKERFILE       默认为 Dockerfile
 # - PUSH             默认为 true（true: --push，false: --load）
@@ -25,13 +24,10 @@ set -euo pipefail
 #   bash DockerfileBuild.sh
 #
 #   # 覆盖主 Tag 和平台，并仅加载到本机（不推远程）
-#   IMAGE_TAG=v1.0.0 PLATFORMS=linux/amd64 PUSH=false bash DockerfileBuild.sh
+#   IMAGE_TAG=v1.0.0 PLATFORMS=linux/amd64,linux/arm64 PUSH=false bash DockerfileBuild.sh
 #
 #   # 强制不使用缓存
 #   NO_CACHE=true bash DockerfileBuild.sh
-#
-#   # 通过第一个参数指定 Tag
-#   bash DockerfileBuild.sh v0.51.2
 ##
 
 # 切换到脚本所在目录（即项目根目录）
@@ -42,7 +38,6 @@ cd "$SCRIPT_DIR"
 IMAGE_REGISTRY="${IMAGE_REGISTRY:-harbor.5210125.xyz:12443}"
 IMAGE_NAME="${IMAGE_NAME:-library/chmlfrp/frpc}"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
-BUILD_DATE_TAG="${BUILD_DATE_TAG:-$(date +%Y%m%d)}"
 PLATFORMS="${PLATFORMS:-linux/amd64,linux/arm64,linux/arm/v7}"
 DOCKERFILE="${DOCKERFILE:-Dockerfile}"
 PUSH="${PUSH:-true}"
@@ -54,13 +49,11 @@ if [[ $# -ge 1 ]]; then
 fi
 
 FULL_IMAGE_MAIN="${IMAGE_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
-FULL_IMAGE_DATE="${IMAGE_REGISTRY}/${IMAGE_NAME}:${BUILD_DATE_TAG}"
 
-echo "==> ChmlFrp Docker Build 配置"
+echo "==> Docker Build 配置"
 echo "  Registry   : ${IMAGE_REGISTRY}"
 echo "  Image      : ${IMAGE_NAME}"
 echo "  Main Tag   : ${IMAGE_TAG}"
-echo "  Date Tag   : ${BUILD_DATE_TAG}"
 echo "  Platforms  : ${PLATFORMS}"
 echo "  Dockerfile : ${DOCKERFILE}"
 echo "  Push       : ${PUSH}"
@@ -69,7 +62,6 @@ echo
 
 build_args=(buildx build --platform "${PLATFORMS}" \
   -t "${FULL_IMAGE_MAIN}" \
-  -t "${FULL_IMAGE_DATE}" \
   --progress=plain -f "${DOCKERFILE}" .)
 
 if [[ "${NO_CACHE}" == "true" ]]; then
@@ -85,6 +77,5 @@ fi
 
 echo "==> 开始构建镜像："
 echo "  - ${FULL_IMAGE_MAIN}"
-echo "  - ${FULL_IMAGE_DATE}"
 docker "${build_args[@]}"
 echo "==> 构建完成"
